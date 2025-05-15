@@ -14,7 +14,11 @@ export default function LoginPage() {
             <MountainIcon className="h-12 w-12 text-primary" />
           </div>
           <CardTitle className="text-2xl">Welcome to PerformEdge Lite</CardTitle>
-          <CardDescription>Please select your user profile to continue</CardDescription>
+          <CardDescription>
+            Please select a role to proceed. You will then select your profile.
+            In a full system, you would enter your name and password for authentication.
+            If you're not yet registered, you would be redirected to a registration page.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <LoginForm />
