@@ -15,18 +15,20 @@ interface AppLayoutProps {
   children: ReactNode;
 }
 
+const PUBLIC_PATHS = ['/login', '/register'];
+
 export default function AppLayout({ children }: AppLayoutProps) {
   const { currentUser, logout, isLoading } = useAuth();
   const router = useRouter();
   const pathname = usePathname();
 
   useEffect(() => {
-    if (!isLoading && !currentUser && pathname !== '/login') {
+    if (!isLoading && !currentUser && !PUBLIC_PATHS.includes(pathname)) {
       router.push('/login');
     }
   }, [isLoading, currentUser, pathname, router]);
 
-  if (isLoading && pathname !== '/login') {
+  if (isLoading && !PUBLIC_PATHS.includes(pathname)) {
     return (
       <div className="flex h-screen items-center justify-center">
         <MountainIcon className="h-12 w-12 animate-pulse text-primary" />
@@ -35,11 +37,11 @@ export default function AppLayout({ children }: AppLayoutProps) {
     );
   }
 
-  if (pathname === '/login') {
+  if (PUBLIC_PATHS.includes(pathname)) {
     return <main className="flex min-h-svh items-center justify-center bg-background p-4">{children}</main>;
   }
   
-  if (!currentUser && pathname !== '/login') {
+  if (!currentUser && !PUBLIC_PATHS.includes(pathname)) {
      // This state should ideally not be reached for long due to the useEffect redirect.
      // It acts as a fallback during the brief period before redirection or if routing is slow.
     return (
