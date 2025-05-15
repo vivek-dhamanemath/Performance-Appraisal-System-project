@@ -15,9 +15,8 @@ export default function LoginPage() {
           </div>
           <CardTitle className="text-2xl">Welcome to PerformEdge Lite</CardTitle>
           <CardDescription>
-            Please select a role to proceed. You will then select your profile.
-            In a full system, you would enter your name and password for authentication.
-            If you're not yet registered, you would be redirected to a registration page.
+            Select your role to continue. After selecting, you will be asked to enter only your username and password for login.
+            If you're not registered, you'll be redirected to the registration page.
           </CardDescription>
         </CardHeader>
         <CardContent>
