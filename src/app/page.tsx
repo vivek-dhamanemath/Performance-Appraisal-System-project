@@ -4,11 +4,12 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Users, ListChecks, BrainCircuit, BarChart3, TrendingUp, TrendingDown, Minus, User, Settings, Edit, LineChart, Download, FileText, Briefcase } from "lucide-react";
+import { Users, ListChecks, BrainCircuit, BarChart3, TrendingUp, TrendingDown, Minus, User, Settings, Edit, LineChart, Download, FileText, Briefcase, CalendarClock, Calculator, Building2, UserCog, History, BarChartBig, FileSignature, MessagesSquare, MessageSquare, UsersRound, BookOpenCheck, Info, Bell, AlertTriangle, CheckCircle2 } from "lucide-react";
 import { mockDashboardMetrics, mockDepartmentPerformance, type DepartmentPerformance } from "@/lib/mock-data";
 import MetricCard from "@/components/features/dashboard/metric-card";
 import PerformanceChart from "@/components/features/dashboard/performance-chart";
 import { useAuth } from "@/context/auth-context";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function DashboardPage() {
   const { currentUser } = useAuth();
@@ -46,169 +47,210 @@ export default function DashboardPage() {
 
   // Employee View
   if (currentUser.role === 'Employee') {
+    const initials = currentUser.name.split(' ').map((n) => n[0]).join('');
     return (
       <div className="flex flex-col gap-6">
-        <h1 className="text-3xl font-semibold tracking-tight">Welcome, {currentUser.name}!</h1>
-        <p className="text-muted-foreground">Here's your personal dashboard. Access your information and tools.</p>
+        <Card className="shadow-lg">
+          <CardHeader className="flex flex-row items-center gap-4">
+            <Avatar className="h-16 w-16">
+              <AvatarImage src={currentUser.avatarUrl} alt={currentUser.name} data-ai-hint={currentUser.dataAiHint || "person"} />
+              <AvatarFallback>{initials}</AvatarFallback>
+            </Avatar>
+            <div>
+              <CardTitle className="text-3xl">Welcome, {currentUser.name}!</CardTitle>
+              <CardDescription>Here's your personal performance dashboard.</CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent>
+             <p className="text-lg">Current Appraisal Status: <span className="font-semibold text-primary">Review Pending</span> (Illustrative)</p>
+          </CardContent>
+        </Card>
         
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          <Card className="shadow-lg hover:shadow-xl transition-shadow">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <Card className="shadow-lg hover:shadow-xl transition-shadow col-span-full lg:col-span-2">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2"><User className="h-6 w-6 text-primary" /> My Profile</CardTitle>
-              <CardDescription>View and manage your personal details.</CardDescription>
+              <CardTitle className="flex items-center gap-2"><LineChart className="h-6 w-6 text-primary" /> Performance Trend</CardTitle>
+              <CardDescription>Your performance scores over recent cycles.</CardDescription>
             </CardHeader>
-            <CardContent>
-              <Link href="/employees" passHref>
-                <Button className="w-full">Go to My Profile</Button>
-              </Link>
+            <CardContent className="h-[250px] flex items-center justify-center">
+              <p className="text-muted-foreground">Performance trend graph coming soon!</p>
+              {/* Placeholder for actual chart */}
             </CardContent>
           </Card>
 
           <Card className="shadow-lg hover:shadow-xl transition-shadow">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2"><BrainCircuit className="h-6 w-6 text-primary" /> AI Training Advisor</CardTitle>
-              <CardDescription>Get personalized training suggestions.</CardDescription>
+              <CardTitle className="flex items-center gap-2"><ListChecks className="h-6 w-6 text-primary" /> KPI Scores</CardTitle>
+              <CardDescription>Your scores against key performance indicators.</CardDescription>
             </CardHeader>
-            <CardContent>
-              <Link href="/training-suggestions" passHref>
-                <Button className="w-full">Get Training Advice</Button>
-              </Link>
+            <CardContent className="space-y-2">
+              <div className="flex justify-between p-2 bg-muted/50 rounded-md"><span>Code Quality:</span> <span className="font-semibold">4.5/5</span></div>
+              <div className="flex justify-between p-2 bg-muted/50 rounded-md"><span>Task Completion:</span> <span className="font-semibold">95%</span></div>
+              <div className="flex justify-between p-2 bg-muted/50 rounded-md"><span>Communication:</span> <span className="font-semibold">Good</span></div>
+              <p className="text-xs text-muted-foreground text-center pt-2">Detailed KPI breakdown in "My Appraisals".</p>
             </CardContent>
           </Card>
+        </div>
 
-          <Card className="shadow-lg bg-muted/30">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2"><LineChart className="h-6 w-6 text-muted-foreground" /> My Performance Overview</CardTitle>
-              <CardDescription>Track your performance scores and feedback over time.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground text-center p-4">Feature coming soon!</p>
-            </CardContent>
-          </Card>
-          
-          <Card className="shadow-lg bg-muted/30">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2"><Download className="h-6 w-6 text-muted-foreground" /> Download Reports</CardTitle>
-              <CardDescription>Download your performance review summaries.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground text-center p-4">Feature coming soon!</p>
-            </CardContent>
-          </Card>
+        <div className="grid gap-6 md:grid-cols-2">
+            <Card className="shadow-lg">
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2"><MessageSquare className="h-6 w-6 text-primary" /> Feedback Summary</CardTitle>
+                    <CardDescription>Highlights from your recent feedback.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <p className="font-medium">Manager Feedback:</p>
+                    <p className="text-sm text-muted-foreground mb-2">"Alice consistently delivers high-quality work..."</p>
+                    <p className="font-medium">Peer Feedback:</p>
+                    <p className="text-sm text-muted-foreground mb-2">"Great collaborator, always helpful."</p>
+                    <p className="font-medium">Self-Assessment:</p>
+                    <p className="text-sm text-muted-foreground">"Identified areas for growth in project leadership."</p>
+                    <Link href="/employee-feedback" passHref><Button variant="link" className="p-0 h-auto mt-2">View All Feedback</Button></Link>
+                </CardContent>
+            </Card>
+            <Card className="shadow-lg">
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2"><BrainCircuit className="h-6 w-6 text-primary" /> Suggested Trainings</CardTitle>
+                    <CardDescription>AI-powered recommendations for your development.</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    <ul className="list-disc list-inside text-sm space-y-1">
+                        <li>Advanced React Patterns</li>
+                        <li>Effective Technical Leadership</li>
+                    </ul>
+                    <Link href="/training-suggestions" passHref><Button className="w-full mt-4">Explore Training</Button></Link>
+                </CardContent>
+            </Card>
         </div>
       </div>
     );
   }
 
-  // Manager and Admin View (largely similar global dashboard for now)
-  return (
-    <div className="flex flex-col gap-6">
-      <h1 className="text-3xl font-semibold tracking-tight">
-        {currentUser.role === 'Manager' ? "Manager Dashboard" : "Admin Dashboard"}
-      </h1>
-      <p className="text-muted-foreground">
-        {currentUser.role === 'Manager' 
-          ? "Overview of system-wide performance metrics. Team-specific analytics will be available in future updates."
-          : "System-wide performance overview and administrative tools."}
-      </p>
-      
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <MetricCard title="Total Employees" value={mockDashboardMetrics.totalEmployees.toString()} icon={<Users className="h-6 w-6 text-muted-foreground" />} description="Currently active employees" />
-        <MetricCard title="Avg. Performance" value={mockDashboardMetrics.averagePerformanceScore.toString() + "/5"} icon={<BarChart3 className="h-6 w-6 text-muted-foreground" />} description="Overall average score" />
-        <MetricCard title="Trainings Suggested" value={mockDashboardMetrics.trainingsSuggested.toString()} icon={<BrainCircuit className="h-6 w-6 text-muted-foreground" />} description="AI-powered recommendations" />
-        <MetricCard title="KPIs Tracked" value={mockDashboardMetrics.kpisTracked.toString()} icon={<ListChecks className="h-6 w-6 text-muted-foreground" />} description="Key Performance Indicators" />
-      </div>
+  // Manager View
+  if (currentUser.role === 'Manager') {
+    return (
+      <div className="flex flex-col gap-6">
+        <Card className="shadow-lg">
+            <CardHeader>
+                <CardTitle className="text-3xl">Welcome, {currentUser.name} (Manager)!</CardTitle>
+                <CardDescription>Oversee your team's performance and manage appraisals.</CardDescription>
+            </CardHeader>
+        </Card>
 
-      {(currentUser.role === 'Manager' || currentUser.role === 'Admin') && (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {currentUser.role === 'Manager' && (
-            <>
-              <Card className="shadow-lg bg-muted/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2"><Edit className="h-6 w-6 text-muted-foreground" /> Submit Team Appraisals</CardTitle>
-                  <CardDescription>Complete and submit performance evaluations for your team members.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground text-center p-4">Feature coming soon!</p>
-                </CardContent>
-              </Card>
-              <Card className="shadow-lg bg-muted/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2"><BarChart3 className="h-6 w-6 text-muted-foreground" /> Detailed Team Analytics</CardTitle>
-                  <CardDescription>View in-depth performance analytics for your team.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground text-center p-4">Feature coming soon!</p>
-                </CardContent>
-              </Card>
-            </>
-          )}
-          {currentUser.role === 'Admin' && (
-            <>
-              <Card className="shadow-lg bg-muted/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2"><Users className="h-6 w-6 text-muted-foreground" /> Manage Users & Roles</CardTitle>
-                  <CardDescription>Add, edit, or remove employees and assign roles.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                   <p className="text-sm text-muted-foreground text-center p-4">Feature coming soon!</p>
-                </CardContent>
-              </Card>
-               <Card className="shadow-lg bg-muted/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2"><ListChecks className="h-6 w-6 text-muted-foreground" /> Manage KPIs</CardTitle>
-                  <CardDescription>Define and update Key Performance Indicators.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground text-center p-4">Feature coming soon!</p>
-                </CardContent>
-              </Card>
-              <Card className="shadow-lg bg-muted/30">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2"><Settings className="h-6 w-6 text-muted-foreground" /> Configure Appraisal Cycles</CardTitle>
-                  <CardDescription>Set up and manage performance review cycles.</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground text-center p-4">Feature coming soon!</p>
-                </CardContent>
-              </Card>
-            </>
-          )}
+        <Card className="border-destructive/50 shadow-lg">
+            <CardHeader className="flex flex-row items-center gap-3">
+                <AlertTriangle className="h-6 w-6 text-destructive" />
+                <CardTitle className="text-destructive">Pending Appraisals (3)</CardTitle>
+            </CardHeader>
+            <CardContent>
+                <CardDescription>You have 3 team members awaiting appraisal submission for Q3 2024.</CardDescription>
+                <Link href="/submit-appraisals" passHref><Button variant="destructive" className="mt-3">Go to Appraisals</Button></Link>
+            </CardContent>
+        </Card>
+        
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <MetricCard title="Team Members" value="5" icon={<Users className="h-6 w-6 text-muted-foreground" />} description="Direct reports" />
+            <MetricCard title="Team Avg. Score" value="4.1/5" icon={<BarChartBig className="h-6 w-6 text-muted-foreground" />} description="Latest cycle" />
+            <MetricCard title="Appraisals Due" value="3" icon={<FileSignature className="h-6 w-6 text-muted-foreground" />} description="This cycle" />
         </div>
-      )}
 
-      <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2">
+            <Card className="shadow-lg">
+                <CardHeader>
+                    <CardTitle>Team Performance Distribution</CardTitle>
+                    <CardDescription>Score distribution for your team in the last cycle.</CardDescription>
+                </CardHeader>
+                <CardContent className="h-[250px] flex items-center justify-center">
+                     <p className="text-muted-foreground">Team performance graph coming soon!</p>
+                </CardContent>
+            </Card>
+            <Card className="shadow-lg">
+                <CardHeader>
+                    <CardTitle>Quick Actions</CardTitle>
+                    <CardDescription>Common tasks for managing your team.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                    <Link href="/submit-appraisals" passHref><Button className="w-full"><FileSignature className="mr-2"/> Appraise Team Member</Button></Link>
+                    <Link href="/manager-feedback" passHref><Button variant="outline" className="w-full"><MessagesSquare className="mr-2"/> Add Feedback</Button></Link>
+                     <Link href="/training-suggestions" passHref><Button variant="outline" className="w-full"><BrainCircuit className="mr-2"/> Recommend Training</Button></Link>
+                </CardContent>
+            </Card>
+        </div>
+      </div>
+    );
+  }
+
+  // Admin View
+  if (currentUser.role === 'Admin') {
+    return (
+      <div className="flex flex-col gap-6">
         <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle>Department Performance</CardTitle>
-            <CardDescription>Average performance scores by department (system-wide data)</CardDescription>
-          </CardHeader>
-          <CardContent className="h-[300px] p-2">
-            <PerformanceChart data={departmentPerformanceChartData} config={chartConfig} />
-          </CardContent>
+            <CardHeader>
+                <CardTitle className="text-3xl">Admin Dashboard</CardTitle>
+                <CardDescription>System-wide overview and administrative tools for PerformEdge Lite.</CardDescription>
+            </CardHeader>
+        </Card>
+        
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <MetricCard title="Total Employees" value={mockDashboardMetrics.totalEmployees.toString()} icon={<UsersRound className="h-6 w-6 text-muted-foreground" />} description="All active users" />
+          <MetricCard title="Avg. Performance" value={mockDashboardMetrics.averagePerformanceScore.toString() + "/5"} icon={<BarChartBig className="h-6 w-6 text-muted-foreground" />} description="Company-wide average" />
+          <MetricCard title="Appraisal Cycles Active" value="1" icon={<CalendarClock className="h-6 w-6 text-muted-foreground" />} description="Q3 2024 Open" />
+          <MetricCard title="KPIs Defined" value={mockDashboardMetrics.kpisTracked.toString()} icon={<ListChecks className="h-6 w-6 text-muted-foreground" />} description="Across all departments" />
+        </div>
+
+        <Card className="shadow-lg">
+            <CardHeader>
+                <CardTitle>Appraisal Cycle Status: Q3 2024</CardTitle>
+                <CardDescription className="flex items-center gap-2"><CheckCircle2 className="h-5 w-5 text-green-500" /> Cycle is <span className="font-semibold">Open</span>. Ends on 30 Sep 2024.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-wrap gap-3">
+                <Link href="/appraisal-cycles" passHref><Button><CalendarClock className="mr-2"/> Manage Cycles</Button></Link>
+                <Link href="/kpis" passHref><Button variant="outline"><ListChecks className="mr-2"/> Manage KPIs</Button></Link>
+                <Link href="/user-roles-access" passHref><Button variant="outline"><UserCog className="mr-2"/> Manage Users</Button></Link>
+                 <Link href="/company-reports" passHref><Button variant="outline"><Building2 className="mr-2"/> View Reports</Button></Link>
+            </CardContent>
         </Card>
 
-        <Card className="shadow-lg">
-          <CardHeader>
-            <CardTitle>Performance Trends</CardTitle>
-            <CardDescription>Recent performance trends across departments (system-wide data)</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ul className="space-y-3">
-              {mockDepartmentPerformance.map((dept) => (
-                <li key={dept.department} className="flex items-center justify-between p-3 bg-secondary/50 rounded-md">
-                  <span className="font-medium">{dept.department}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-muted-foreground">Score: {dept.averageScore}/5</span>
-                    {getTrendIcon(dept.trend)}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
+        <div className="grid gap-6 md:grid-cols-2">
+            <Card className="shadow-lg">
+                <CardHeader>
+                    <CardTitle>Department Performance</CardTitle>
+                    <CardDescription>Average performance scores by department (system-wide data)</CardDescription>
+                </CardHeader>
+                <CardContent className="h-[300px] p-2">
+                    <PerformanceChart data={departmentPerformanceChartData} config={chartConfig} />
+                </CardContent>
+            </Card>
+            <Card className="shadow-lg">
+                <CardHeader>
+                    <CardTitle>System Health & Logs</CardTitle>
+                    <CardDescription>Quick access to system logs and configurations.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                    <Link href="/audit-logs" passHref><Button variant="secondary" className="w-full"><History className="mr-2"/> View Audit Logs</Button></Link>
+                    <Link href="/hike-logic-engine" passHref><Button variant="secondary" className="w-full"><Calculator className="mr-2"/> Configure Hike Logic</Button></Link>
+                    <Link href="/settings" passHref><Button variant="secondary" className="w-full"><Settings className="mr-2"/> System Settings</Button></Link>
+                </CardContent>
+            </Card>
+        </div>
+         <Card className="shadow-lg bg-muted/30">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2"><Info className="h-6 w-6 text-muted-foreground" /> Approvals Pending</CardTitle>
+              <CardDescription>No critical approvals pending at this time.</CardDescription>
+            </CardHeader>
+            <CardContent>
+               <p className="text-sm text-muted-foreground text-center p-4">This section will highlight items needing admin attention.</p>
+            </CardContent>
         </Card>
       </div>
+    );
+  }
+
+  // Fallback for any unhandled role (should not happen with current setup)
+  return (
+    <div>
+      <h1 className="text-2xl font-semibold">Dashboard</h1>
+      <p>Your dashboard is being prepared. Role: {currentUser.role}</p>
     </div>
   );
 }
-

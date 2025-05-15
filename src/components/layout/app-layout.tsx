@@ -4,7 +4,7 @@
 import type { ReactNode } from 'react';
 import { SidebarProvider, Sidebar, SidebarHeader, SidebarContent, SidebarInset, SidebarTrigger, SidebarFooter, SidebarSeparator } from '@/components/ui/sidebar';
 import Navigation from '@/components/layout/navigation';
-import { LogOut, MountainIcon } from 'lucide-react';
+import { LogOut, MountainIcon, Bell } from 'lucide-react'; // Added Bell
 import Link from 'next/link';
 import { useAuth } from '@/context/auth-context';
 import { useRouter, usePathname } from 'next/navigation';
@@ -79,8 +79,15 @@ export default function AppLayout({ children }: AppLayoutProps) {
         )}
       </Sidebar>
       <SidebarInset>
-        <header className="sticky top-0 z-10 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 py-2">
+        <header className="sticky top-0 z-10 flex h-14 items-center justify-between border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 py-2">
           <SidebarTrigger className="sm:hidden" />
+          <div className="flex items-center gap-2">
+            {/* Placeholder for future search or other header items */}
+            <Button variant="ghost" size="icon" className="rounded-full">
+                <Bell className="h-5 w-5" />
+                <span className="sr-only">Notifications</span>
+            </Button>
+          </div>
         </header>
         <main className="flex-1 p-4 sm:px-6 sm:py-0">
           {children}
