@@ -1,12 +1,16 @@
 
+export type UserRole = 'Employee' | 'Manager' | 'Admin';
+
 export interface Employee {
   id: string;
   name: string;
-  role: string;
+  roleTitle: string; // Renamed from 'role' to avoid confusion with UserRole
+  role: UserRole; // Actual access role
   department: string;
   joiningDate: string;
   manager?: string;
   avatarUrl: string;
+  dataAiHint?: string;
   performanceSummary: string;
   existingSkills: string;
 }
@@ -36,7 +40,8 @@ export const mockEmployees: Employee[] = [
   {
     id: '1',
     name: 'Alice Wonderland',
-    role: 'Software Engineer',
+    roleTitle: 'Software Engineer',
+    role: 'Employee',
     department: 'Technology',
     joiningDate: '2022-01-15',
     manager: 'Bob The Builder',
@@ -48,7 +53,8 @@ export const mockEmployees: Employee[] = [
   {
     id: '2',
     name: 'Bob The Builder',
-    role: 'Engineering Manager',
+    roleTitle: 'Engineering Manager',
+    role: 'Manager',
     department: 'Technology',
     joiningDate: '2020-05-20',
     avatarUrl: 'https://placehold.co/100x100.png',
@@ -59,7 +65,8 @@ export const mockEmployees: Employee[] = [
   {
     id: '3',
     name: 'Charlie Brown',
-    role: 'UX Designer',
+    roleTitle: 'UX Designer',
+    role: 'Employee',
     department: 'Design',
     joiningDate: '2023-03-01',
     manager: 'Diana Prince',
@@ -71,7 +78,8 @@ export const mockEmployees: Employee[] = [
   {
     id: '4',
     name: 'Diana Prince',
-    role: 'Head of Design',
+    roleTitle: 'Head of Design',
+    role: 'Admin', // Head of Design as Admin for broader access
     department: 'Design',
     joiningDate: '2019-11-10',
     avatarUrl: 'https://placehold.co/100x100.png',
@@ -109,4 +117,5 @@ export const samplePerformanceDataForAI = {
   employeeName: mockEmployees[0].name,
   performanceData: mockEmployees[0].performanceSummary,
   existingSkills: mockEmployees[0].existingSkills,
+  organizationalNeeds: "Focus on cloud technologies and cross-functional collaboration."
 };

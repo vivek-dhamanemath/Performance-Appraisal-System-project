@@ -23,7 +23,7 @@ export default function EmployeeCard({ employee }: EmployeeCardProps) {
           <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>
         <CardTitle>{employee.name}</CardTitle>
-        <CardDescription>{employee.role}</CardDescription>
+        <CardDescription>{employee.roleTitle} ({employee.role})</CardDescription>
       </CardHeader>
       <CardContent className="flex-grow space-y-2 text-sm text-muted-foreground">
         <div className="flex items-center gap-2">
