@@ -1,8 +1,8 @@
 
 "use client";
 
-import { useFormState, useFormStatus } from "react-dom";
-import { useEffect, useRef, useState } from "react"; // Added useState
+import { useActionState, useFormStatus } from "react"; // Changed from react-dom to react for useActionState
+import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -44,7 +44,7 @@ interface TrainingSuggestionFormProps {
 }
 
 export default function TrainingSuggestionForm({ currentUser }: TrainingSuggestionFormProps) {
-  const [state, formAction] = useFormState(handleGetTrainingSuggestions, initialState);
+  const [state, formAction] = useActionState(handleGetTrainingSuggestions, initialState); // Changed useFormState to useActionState
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
   
