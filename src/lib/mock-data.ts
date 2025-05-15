@@ -4,8 +4,9 @@ export type UserRole = 'Employee' | 'Manager' | 'Admin';
 export interface Employee {
   id: string;
   name: string;
-  roleTitle: string; // Renamed from 'role' to avoid confusion with UserRole
-  role: UserRole; // Actual access role
+  email: string; // Added email
+  roleTitle: string;
+  role: UserRole;
   department: string;
   joiningDate: string;
   manager?: string;
@@ -20,7 +21,7 @@ export interface Kpi {
   name: string;
   weight: number;
   description: string;
-  category: string; // e.g., Productivity, Communication
+  category: string;
 }
 
 export interface DashboardMetrics {
@@ -40,6 +41,7 @@ export const mockEmployees: Employee[] = [
   {
     id: '1',
     name: 'Alice Wonderland',
+    email: 'alice@example.com',
     roleTitle: 'Software Engineer',
     role: 'Employee',
     department: 'Technology',
@@ -53,6 +55,7 @@ export const mockEmployees: Employee[] = [
   {
     id: '2',
     name: 'Bob The Builder',
+    email: 'bob@example.com',
     roleTitle: 'Engineering Manager',
     role: 'Manager',
     department: 'Technology',
@@ -65,6 +68,7 @@ export const mockEmployees: Employee[] = [
   {
     id: '3',
     name: 'Charlie Brown',
+    email: 'charlie@example.com',
     roleTitle: 'UX Designer',
     role: 'Employee',
     department: 'Design',
@@ -78,8 +82,9 @@ export const mockEmployees: Employee[] = [
   {
     id: '4',
     name: 'Diana Prince',
+    email: 'diana@example.com',
     roleTitle: 'Head of Design',
-    role: 'Admin', // Head of Design as Admin for broader access
+    role: 'Admin',
     department: 'Design',
     joiningDate: '2019-11-10',
     avatarUrl: 'https://placehold.co/100x100.png',
@@ -112,7 +117,6 @@ export const mockDepartmentPerformance: DepartmentPerformance[] = [
     { department: 'Sales', averageScore: 4.3, trend: 'up' },
 ];
 
-// Sample employee performance data for Training AI
 export const samplePerformanceDataForAI = {
   employeeName: mockEmployees[0].name,
   performanceData: mockEmployees[0].performanceSummary,
