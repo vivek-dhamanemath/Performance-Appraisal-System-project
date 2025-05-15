@@ -4,7 +4,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Users, ListChecks, BrainCircuit, BarChart3, TrendingUp, TrendingDown, Minus, User, Settings, Edit, LineChart, Download, FileText, Briefcase, CalendarClock, Calculator, Building2, UserCog, History, BarChartBig, FileSignature, MessagesSquare, MessageSquare, UsersRound, BookOpenCheck, Info, Bell, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Users, ListChecks, BrainCircuit, BarChart3, TrendingUp, TrendingDown, Minus, User, Settings, Edit, LineChart, Download, FileText, Briefcase, CalendarClock, Calculator, Building2, UserCog, History, BarChartBig, FileSignature, MessagesSquare, MessageSquare, UsersRound, BookOpenCheck, Info, Bell, AlertTriangle, CheckCircle2, Phone, Mail, MapPin, BuildingIcon } from "lucide-react"; // Added more icons
 import { mockDashboardMetrics, mockDepartmentPerformance, type DepartmentPerformance } from "@/lib/mock-data";
 import MetricCard from "@/components/features/dashboard/metric-card";
 import PerformanceChart from "@/components/features/dashboard/performance-chart";
@@ -47,18 +47,23 @@ export default function DashboardPage() {
 
   // Employee View
   if (currentUser.role === 'Employee') {
-    const initials = currentUser.name.split(' ').map((n) => n[0]).join('');
+    const initials = currentUser.fullName.split(' ').map((n) => n[0]).join('');
     return (
       <div className="flex flex-col gap-6">
         <Card className="shadow-lg">
           <CardHeader className="flex flex-row items-center gap-4">
-            <Avatar className="h-16 w-16">
-              <AvatarImage src={currentUser.avatarUrl} alt={currentUser.name} data-ai-hint={currentUser.dataAiHint || "person"} />
+            <Avatar className="h-20 w-20"> {/* Increased avatar size */}
+              <AvatarImage src={currentUser.profileImageUrl} alt={currentUser.fullName} data-ai-hint={currentUser.dataAiHint || "person"} />
               <AvatarFallback>{initials}</AvatarFallback>
             </Avatar>
             <div>
-              <CardTitle className="text-3xl">Welcome, {currentUser.name}!</CardTitle>
-              <CardDescription>Here's your personal performance dashboard.</CardDescription>
+              <CardTitle className="text-3xl">Welcome, {currentUser.fullName}!</CardTitle>
+              <CardDescription className="text-md">{currentUser.designation} - {currentUser.department}</CardDescription>
+              <div className="mt-2 space-y-1 text-sm text-muted-foreground">
+                <div className="flex items-center gap-2"><Mail className="h-4 w-4"/>{currentUser.email}</div>
+                {currentUser.phone && <div className="flex items-center gap-2"><Phone className="h-4 w-4"/>{currentUser.phone}</div>}
+                <div className="flex items-center gap-2"><MapPin className="h-4 w-4"/>{currentUser.location} ({currentUser.workMode})</div>
+              </div>
             </div>
           </CardHeader>
           <CardContent>
@@ -74,7 +79,6 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent className="h-[250px] flex items-center justify-center">
               <p className="text-muted-foreground">Performance trend graph coming soon!</p>
-              {/* Placeholder for actual chart */}
             </CardContent>
           </Card>
 
@@ -100,7 +104,7 @@ export default function DashboardPage() {
                 </CardHeader>
                 <CardContent>
                     <p className="font-medium">Manager Feedback:</p>
-                    <p className="text-sm text-muted-foreground mb-2">"Alice consistently delivers high-quality work..."</p>
+                    <p className="text-sm text-muted-foreground mb-2">"{currentUser.fullName} consistently delivers high-quality work..."</p>
                     <p className="font-medium">Peer Feedback:</p>
                     <p className="text-sm text-muted-foreground mb-2">"Great collaborator, always helpful."</p>
                     <p className="font-medium">Self-Assessment:</p>
@@ -132,8 +136,8 @@ export default function DashboardPage() {
       <div className="flex flex-col gap-6">
         <Card className="shadow-lg">
             <CardHeader>
-                <CardTitle className="text-3xl">Welcome, {currentUser.name} (Manager)!</CardTitle>
-                <CardDescription>Oversee your team's performance and manage appraisals.</CardDescription>
+                <CardTitle className="text-3xl">Welcome, {currentUser.fullName} (Manager)!</CardTitle>
+                <CardDescription>Oversee your team's performance and manage appraisals for the {currentUser.department} department.</CardDescription>
             </CardHeader>
         </Card>
 
@@ -207,7 +211,7 @@ export default function DashboardPage() {
                 <Link href="/appraisal-cycles" passHref><Button><CalendarClock className="mr-2"/> Manage Cycles</Button></Link>
                 <Link href="/kpis" passHref><Button variant="outline"><ListChecks className="mr-2"/> Manage KPIs</Button></Link>
                 <Link href="/user-roles-access" passHref><Button variant="outline"><UserCog className="mr-2"/> Manage Users</Button></Link>
-                 <Link href="/company-reports" passHref><Button variant="outline"><Building2 className="mr-2"/> View Reports</Button></Link>
+                 <Link href="/company-reports" passHref><Button variant="outline"><BuildingIcon className="mr-2"/> View Reports</Button></Link> {/* Changed icon */}
             </CardContent>
         </Card>
 

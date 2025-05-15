@@ -1,17 +1,30 @@
 
 export type UserRole = 'Employee' | 'Manager' | 'Admin';
+export type EmployeeType = 'Full-time' | 'Part-time' | 'Intern' | 'Contractor';
+export type WorkMode = 'Onsite' | 'Remote' | 'Hybrid';
 
 export interface Employee {
-  id: string;
-  name: string;
-  email: string; // Added email
-  roleTitle: string;
-  role: UserRole;
+  id: string; // employeeId
+  fullName: string;
+  email: string;
+  phone?: string;
+  dateOfBirth?: string; // Store as ISO string e.g., "1990-01-01"
+  gender?: 'Male' | 'Female' | 'Other' | 'Prefer not to say';
+  profileImageUrl: string;
+  dataAiHint?: string; // For placeholder images
+
+  // Job & Department Information
+  designation: string; // Was roleTitle
   department: string;
-  joiningDate: string;
-  manager?: string;
-  avatarUrl: string;
-  dataAiHint?: string;
+  managerId?: string; // Reference to their reporting manager's Employee ID
+  joiningDate: string; // Store as ISO string e.g., "2022-01-15"
+  employeeType: EmployeeType;
+  location: string; // Office location
+  workMode: WorkMode;
+
+  // Existing fields
+  role: UserRole; // To determine app behavior (Employee, Manager, Admin)
+  manager?: string; // Name of the manager (can be derived from managerId if needed for display)
   performanceSummary: string;
   existingSkills: string;
 }
@@ -39,56 +52,77 @@ export interface DepartmentPerformance {
 
 export const mockEmployees: Employee[] = [
   {
-    id: '1',
-    name: 'Alice Wonderland',
+    id: 'EMP001',
+    fullName: 'Alice Wonderland',
     email: 'alice@example.com',
-    roleTitle: 'Software Engineer',
-    role: 'Employee',
-    department: 'Technology',
-    joiningDate: '2022-01-15',
-    manager: 'Bob The Builder',
-    avatarUrl: 'https://placehold.co/100x100.png',
+    phone: '555-0101',
+    dateOfBirth: '1992-03-10',
+    gender: 'Female',
+    profileImageUrl: 'https://placehold.co/100x100.png',
     dataAiHint: 'woman portrait',
+    designation: 'Software Engineer',
+    department: 'Technology',
+    managerId: 'EMP002',
+    joiningDate: '2022-01-15',
+    employeeType: 'Full-time',
+    location: 'New York HQ',
+    workMode: 'Hybrid',
+    role: 'Employee',
+    manager: 'Bob The Builder',
     performanceSummary: 'Alice consistently delivers high-quality code and is a great team player. Could improve on leading project discussions.',
     existingSkills: 'JavaScript, React, Node.js, Agile Development',
   },
   {
-    id: '2',
-    name: 'Bob The Builder',
+    id: 'EMP002',
+    fullName: 'Bob The Builder',
     email: 'bob@example.com',
-    roleTitle: 'Engineering Manager',
-    role: 'Manager',
+    phone: '555-0102',
+    dateOfBirth: '1985-07-22',
+    gender: 'Male',
+    profileImageUrl: 'https://placehold.co/100x100.png',
+    dataAiHint: 'man portrait',
+    designation: 'Engineering Manager',
     department: 'Technology',
     joiningDate: '2020-05-20',
-    avatarUrl: 'https://placehold.co/100x100.png',
-    dataAiHint: 'man portrait',
+    employeeType: 'Full-time',
+    location: 'New York HQ',
+    workMode: 'Onsite',
+    role: 'Manager',
     performanceSummary: 'Bob is an effective manager, good at unblocking his team. Needs to focus more on strategic tech alignment.',
     existingSkills: 'Team Leadership, Project Management, System Architecture, Mentoring',
   },
   {
-    id: '3',
-    name: 'Charlie Brown',
+    id: 'EMP003',
+    fullName: 'Charlie Brown',
     email: 'charlie@example.com',
-    roleTitle: 'UX Designer',
-    role: 'Employee',
-    department: 'Design',
-    joiningDate: '2023-03-01',
-    manager: 'Diana Prince',
-    avatarUrl: 'https://placehold.co/100x100.png',
+    phone: '555-0103',
+    profileImageUrl: 'https://placehold.co/100x100.png',
     dataAiHint: 'person smiling',
+    designation: 'UX Designer',
+    department: 'Design',
+    managerId: 'EMP004',
+    joiningDate: '2023-03-01',
+    employeeType: 'Full-time',
+    location: 'Remote',
+    workMode: 'Remote',
+    role: 'Employee',
+    manager: 'Diana Prince',
     performanceSummary: 'Charlie has great design instincts but needs to improve on meeting deadlines and incorporating feedback more readily.',
     existingSkills: 'UI Design, UX Research, Figma, Prototyping',
   },
   {
-    id: '4',
-    name: 'Diana Prince',
+    id: 'EMP004',
+    fullName: 'Diana Prince',
     email: 'diana@example.com',
-    roleTitle: 'Head of Design',
-    role: 'Admin',
+    profileImageUrl: 'https://placehold.co/100x100.png',
+    dataAiHint: 'woman professional',
+    designation: 'Head of Design',
     department: 'Design',
     joiningDate: '2019-11-10',
-    avatarUrl: 'https://placehold.co/100x100.png',
-    dataAiHint: 'woman professional',
+    employeeType: 'Full-time',
+    location: 'London Office',
+    workMode: 'Hybrid',
+    role: 'Admin',
     performanceSummary: 'Diana leads the design team effectively, fostering innovation. Could improve delegation skills.',
     existingSkills: 'Design Leadership, Product Strategy, User-Centered Design, Team Management',
   },
@@ -118,7 +152,7 @@ export const mockDepartmentPerformance: DepartmentPerformance[] = [
 ];
 
 export const samplePerformanceDataForAI = {
-  employeeName: mockEmployees[0].name,
+  employeeName: mockEmployees[0].fullName,
   performanceData: mockEmployees[0].performanceSummary,
   existingSkills: mockEmployees[0].existingSkills,
   organizationalNeeds: "Focus on cloud technologies and cross-functional collaboration."

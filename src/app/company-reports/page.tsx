@@ -1,12 +1,12 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Building2 } from "lucide-react";
+import { BuildingIcon } from "lucide-react"; // Changed Building2 to BuildingIcon
 
 export default function CompanyReportsPage() {
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center gap-3">
-        <Building2 className="h-8 w-8 text-primary" />
+        <BuildingIcon className="h-8 w-8 text-primary" /> {/* Changed Building2 to BuildingIcon */}
         <h1 className="text-3xl font-semibold tracking-tight">Company Reports</h1>
       </div>
       <Card>

@@ -7,8 +7,8 @@ import { SidebarMenu, SidebarMenuItem, SidebarMenuButton } from '@/components/ui
 import { 
   LayoutDashboard, Users, ListChecks, BrainCircuit, FileText, MessageSquare, 
   GraduationCap, Download, Settings, FileSignature, BarChartBig, MessagesSquare,
-  UsersRound, CalendarClock, Calculator, Building2, BookOpenCheck, UserCog, History,
-  Lightbulb // Re-added Lightbulb as it was removed from lucide imports
+  UsersRound, CalendarClock, Calculator, BuildingIcon, BookOpenCheck, UserCog, History, // Changed Building2 to BuildingIcon
+  Lightbulb 
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/auth-context';
@@ -21,29 +21,29 @@ const employeeNavItems = [
   ...commonNavItems,
   { href: '/my-appraisals', label: 'My Appraisals', icon: FileText },
   { href: '/employee-feedback', label: 'Feedback', icon: MessageSquare },
-  { href: '/training-suggestions', label: 'Learning & Dev', icon: BrainCircuit }, // Uses existing AI page
+  { href: '/training-suggestions', label: 'Learning & Dev', icon: BrainCircuit }, 
   { href: '/documents', label: 'Documents', icon: Download },
   { href: '/settings', label: 'Settings', icon: Settings },
 ];
 
 const managerNavItems = [
   ...commonNavItems,
-  { href: '/employees', label: 'My Team', icon: Users }, // Uses existing employees page
+  { href: '/employees', label: 'My Team', icon: Users }, 
   { href: '/submit-appraisals', label: 'Submit Appraisals', icon: FileSignature },
   { href: '/team-reports', label: 'Team Reports', icon: BarChartBig },
   { href: '/manager-feedback', label: 'Feedback/Comments', icon: MessagesSquare },
-  { href: '/training-suggestions', label: 'Training Recommends', icon: BrainCircuit }, // Uses existing AI page
+  { href: '/training-suggestions', label: 'Training Recommends', icon: BrainCircuit },
   { href: '/settings', label: 'Settings', icon: Settings },
 ];
 
 const adminNavItems = [
   ...commonNavItems,
-  { href: '/employees', label: 'All Employees', icon: UsersRound }, // Uses existing employees page
+  { href: '/employees', label: 'All Employees', icon: UsersRound }, 
   { href: '/appraisal-cycles', label: 'Appraisal Cycles', icon: CalendarClock },
   { href: '/hike-logic-engine', label: 'Hike Logic Engine', icon: Calculator },
-  { href: '/company-reports', label: 'Company Reports', icon: Building2 },
-  { href: '/kpis', label: 'KPI Management', icon: ListChecks }, // Uses existing KPIs page
-  { href: '/training-suggestions', label: 'Learning Hub', icon: BookOpenCheck }, // Uses existing AI page
+  { href: '/company-reports', label: 'Company Reports', icon: BuildingIcon }, // Changed Building2 to BuildingIcon
+  { href: '/kpis', label: 'KPI Management', icon: ListChecks }, 
+  { href: '/training-suggestions', label: 'Learning Hub', icon: BookOpenCheck }, 
   { href: '/user-roles-access', label: 'User Roles & Access', icon: UserCog },
   { href: '/audit-logs', label: 'Audit Logs', icon: History },
   { href: '/settings', label: 'Settings', icon: Settings },
@@ -54,7 +54,7 @@ export default function Navigation() {
   const pathname = usePathname();
   const { currentUser } = useAuth();
 
-  let navItemsToDisplay = commonNavItems; // Default
+  let navItemsToDisplay = commonNavItems; 
 
   if (currentUser) {
     switch (currentUser.role) {
@@ -68,7 +68,7 @@ export default function Navigation() {
         navItemsToDisplay = adminNavItems;
         break;
       default:
-        navItemsToDisplay = commonNavItems; // Fallback
+        navItemsToDisplay = commonNavItems; 
     }
   }
   
