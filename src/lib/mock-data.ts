@@ -1,5 +1,4 @@
-
-export type UserRole = 'Employee' | 'Manager' | 'Admin';
+export enum UserRole { Employee = 'Employee', Manager = 'Manager', Admin = 'Admin' }
 export type EmployeeType = 'Full-time' | 'Part-time' | 'Intern' | 'Contractor';
 export type WorkMode = 'Onsite' | 'Remote' | 'Hybrid';
 
@@ -67,7 +66,7 @@ export const mockEmployees: Employee[] = [
     employeeType: 'Full-time',
     location: 'New York HQ',
     workMode: 'Hybrid',
-    role: 'Employee',
+    role: UserRole.Employee,
     manager: 'Bob The Builder',
     performanceSummary: 'Alice consistently delivers high-quality code and is a great team player. Could improve on leading project discussions.',
     existingSkills: 'JavaScript, React, Node.js, Agile Development',
@@ -87,7 +86,7 @@ export const mockEmployees: Employee[] = [
     employeeType: 'Full-time',
     location: 'New York HQ',
     workMode: 'Onsite',
-    role: 'Manager',
+    role: UserRole.Manager,
     performanceSummary: 'Bob is an effective manager, good at unblocking his team. Needs to focus more on strategic tech alignment.',
     existingSkills: 'Team Leadership, Project Management, System Architecture, Mentoring',
   },
@@ -105,7 +104,7 @@ export const mockEmployees: Employee[] = [
     employeeType: 'Full-time',
     location: 'Remote',
     workMode: 'Remote',
-    role: 'Employee',
+    role: UserRole.Employee,
     manager: 'Diana Prince',
     performanceSummary: 'Charlie has great design instincts but needs to improve on meeting deadlines and incorporating feedback more readily.',
     existingSkills: 'UI Design, UX Research, Figma, Prototyping',
@@ -122,7 +121,7 @@ export const mockEmployees: Employee[] = [
     employeeType: 'Full-time',
     location: 'London Office',
     workMode: 'Hybrid',
-    role: 'Admin',
+    role: UserRole.Admin,
     performanceSummary: 'Diana leads the design team effectively, fostering innovation. Could improve delegation skills.',
     existingSkills: 'Design Leadership, Product Strategy, User-Centered Design, Team Management',
   },

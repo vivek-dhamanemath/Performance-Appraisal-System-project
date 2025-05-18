@@ -47,17 +47,17 @@ export default function DashboardPage() {
 
   // Employee View
   if (currentUser.role === 'Employee') {
-    const initials = currentUser.fullName.split(' ').map((n) => n[0]).join('');
+    const initials = currentUser.name ? currentUser.name.split(' ').map((n) => n[0]).join('') : 'U';
     return (
       <div className="flex flex-col gap-6">
         <Card className="shadow-lg">
           <CardHeader className="flex flex-row items-center gap-4">
             <Avatar className="h-20 w-20"> {/* Increased avatar size */}
-              <AvatarImage src={currentUser.profileImageUrl} alt={currentUser.fullName} data-ai-hint={currentUser.dataAiHint || "person"} />
+              <AvatarImage src={currentUser.profileImageUrl} alt={currentUser.name} title={currentUser.dataAiHint} />
               <AvatarFallback>{initials}</AvatarFallback>
             </Avatar>
             <div>
-              <CardTitle className="text-3xl">Welcome, {currentUser.fullName}!</CardTitle>
+              <CardTitle className="text-3xl">Welcome, {currentUser.name}!</CardTitle>
               <CardDescription className="text-md">{currentUser.designation} - {currentUser.department}</CardDescription>
               <div className="mt-2 space-y-1 text-sm text-muted-foreground">
                 <div className="flex items-center gap-2"><Mail className="h-4 w-4"/>{currentUser.email}</div>
@@ -104,7 +104,7 @@ export default function DashboardPage() {
                 </CardHeader>
                 <CardContent>
                     <p className="font-medium">Manager Feedback:</p>
-                    <p className="text-sm text-muted-foreground mb-2">"{currentUser.fullName} consistently delivers high-quality work..."</p>
+                    <p className="text-sm text-muted-foreground mb-2">"{currentUser.name} consistently delivers high-quality work..."</p>
                     <p className="font-medium">Peer Feedback:</p>
                     <p className="text-sm text-muted-foreground mb-2">"Great collaborator, always helpful."</p>
                     <p className="font-medium">Self-Assessment:</p>
@@ -136,7 +136,7 @@ export default function DashboardPage() {
       <div className="flex flex-col gap-6">
         <Card className="shadow-lg">
             <CardHeader>
-                <CardTitle className="text-3xl">Welcome, {currentUser.fullName} (Manager)!</CardTitle>
+                <CardTitle className="text-3xl">Welcome, {currentUser.name} (Manager)!</CardTitle>
                 <CardDescription>Oversee your team's performance and manage appraisals for the {currentUser.department} department.</CardDescription>
             </CardHeader>
         </Card>
